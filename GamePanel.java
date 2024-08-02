@@ -24,6 +24,8 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running =false;
     Timer timer;
     Random random;
+    JButton resetButton; 
+
     //constructor
     GamePanel(){
         random = new Random();
@@ -31,6 +33,21 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
+
+        // reset button
+        resetButton = new JButton("Reset");
+        resetButton.setBounds(SCREEN_WIDTH / 2 - 50,(int) (SCREEN_HEIGHT / 1.42) , 100, 50); // button position and size
+        resetButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                resetGame();
+            resetButton.setVisible(false); // Hide the button after it's pressed
+            }
+        });
+
+        this.setLayout(null); // disable automatic layout so i can use my own
+        this.add(resetButton);// Add the resetButton component to the current panel (this) making it visible and part of the panel layout.
+        resetButton.setVisible(false); 
+
         startGame();
 
     }
@@ -40,6 +57,21 @@ public class GamePanel extends JPanel implements ActionListener {
         timer=new Timer(DELAY, this);
         timer.start();
 
+    }
+    public void resetGame() { 
+        // Reset game variables
+        bodyParts = 6;
+        applesEaten = 0;
+        direction = 'R';
+        running = true;
+        for (int i = 0; i < GAME_UNITS; i++) {
+            x[i] = 0;
+            y[i] = 0;
+        }
+        newApple();
+        timer.restart(); 
+        repaint(); // Refresh the panel
+     
     }
 
     public void paintComponent(Graphics g){
@@ -168,6 +200,10 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics2= getFontMetrics(g.getFont()); //lining up font in middle
         g.drawString("Score:"+applesEaten, (SCREEN_WIDTH-metrics2.stringWidth("Score:"+applesEaten))/2, g.getFont().getSize());
         
+        //  reset button
+      
+        resetButton.setVisible(true);
+            
         
     }
 

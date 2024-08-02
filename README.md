@@ -17,3 +17,4 @@ You can also customize the game a little bit:
 2. To make your snake multicolor, go to the `GamePanel` file. At line 72, you will see an explanation on how to make your snake multicolor.
 
 Make sure to have Java installed to run this game properly.
+
